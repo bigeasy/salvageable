@@ -1,6 +1,6 @@
 {
     "name":                 "salvageable",
-    "version":              "0.0.1",
+    "version":              "0.0.0",
     "description":
 
       "Reed-Solomon for Node.js streams in pure-Javascript.",
