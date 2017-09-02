@@ -1,0 +1,19 @@
+Salvageable
+
+Read-Solomon for Node.js streams in pure-Javascript.
+
+    Discussion:     https://github.com/bigeasy/salvageable/issues/1
+
+    Documentation:  https://bigeasy.github.io/salvageable
+    Source:         https://github.com/bigeasy/salvageable
+    Issues:         https://github.com/bigeasy/salvageable/issues
+    CI:             https://travis-ci.org/bigeasy/salvageable
+    Coverage:       https://coveralls.io/github/bigeasy/salvageable
+
+    Install:        `npm install salvageable`
+
+    License:        MIT
+
+To learn everything you want to know about Salvageable start here:
+
+    http://bigeasy.github.io/salvageable

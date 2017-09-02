@@ -1,0 +1,33 @@
+{
+    "name":                 "salvageable",
+    "version":              "0.0.1",
+    "description":
+
+      "Reed-Solomon for Node.js streams in pure-Javascript.",
+
+    "keywords":
+    [
+                            "comparator", "sort"
+    ],
+    "author":               "Alan Gutierrez <alan@prettyrobots.com>",
+    "homepage":             "https://github.com/bigeasy/ascension",
+    "bugs":                 "https://github.com/bigeasy/ascension/issues",
+    "license":              "MIT",
+    "repository":
+    {
+                            "type": "git",
+                            "url": "http://github.com/bigeasy/ascension.git"
+    },
+    "dependencies":
+    {
+    },
+    "devDependencies":
+    {
+                            "proof":                        "3.0.x"
+    },
+    "main":                 "salvageable",
+    "scripts":
+    {
+                            "test": "proof platform win32 && proof test */*.t.js || t/test"
+    }
+}
