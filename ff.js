@@ -3,16 +3,16 @@
  * https://en.wikiversity.org/wiki/Reed%E2%80%93Solomon_codes_for_coders#Finite_field_arithmetic
  */
 
-Field.prototype.= function (size, primitive) {
+function Field (size, primitive) {
     this.size = size
     this.primitive = primitive
     this.exp_length = size * 2
-    this.exponents = [].apply(null, new Array(exp_length)).map(function () { return 1})
-    this.logs = [].apply(null, new Array(size)).map(function () { return 0})
+    this.exponents = [].apply(null, new Array(exp_length)).map(function () { return 1 })
+    this.logs = [].apply(null, new Array(size)).map(function () { return 0 })
 
     var x = 1, i = 1
 
-     while(i < size) {
+     while (i < size) {
         x <<= 1
         if (x > size)  x ^= primitive
         this.exponents[i] = x
@@ -49,13 +49,6 @@ Field.prototype.inverse = function (i) {
     return this.exponents[this.size - this.logs[i]]
 }
 
-Field.prototype.divide = function (x, y) {
-    assert(y != 0)
-    if (x == 0) return 0
-
-    return this.exponents[]
-}
-
 Field.prototype.scalePoly = function (p, x) {
     var r = []
     for (var i = 0; i < p.length; i++)
@@ -68,7 +61,7 @@ Field.prototype.addPoly = function (p, q) {
     var pLen = p.length,
         qLen = q.length,
         maxLen = Math.max(pLen, qLen),
-        r = [].apply(null, new Array(maxLen)).map(function () { return 0}),
+        r = [].apply(null, new Array(maxLen)).map(function () { return 0 }),
         rLen = r.length
 
     for (var i = 0; i < pLen; i++) {
@@ -80,7 +73,6 @@ Field.prototype.addPoly = function (p, q) {
     }
 
     return r
-
 }
 
 Field.prototype.multiplyPoly = function (p, q) {
@@ -89,7 +81,7 @@ Field.prototype.multiplyPoly = function (p, q) {
 
     var r, arraySize = p.length + q.length - 1;
 
-    r = [].apply(null, new Array(arraySize)).map(function () { return 0})
+    r = [].apply(null, new Array(arraySize)).map(function () { return 0 })
 
     for (var j = 0; j < q.length; j++) {
         for (var i = 0; i < p.length; i++) {
