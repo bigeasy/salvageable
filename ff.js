@@ -38,6 +38,7 @@ Field.prototype.log = function (i) {
     return this.logs[i]
 }
 
+// instead of x/y, we can use x · 1/y.
 Field.prototype.multply = function (x, y) {
     if (x == 0 || y == 0) return 0
     return this.exponents[this.logs[x] + this.logs[y]]
@@ -47,6 +48,19 @@ Field.prototype.inverse = function (i) {
     if (i == 0) return 0
 
     return this.exponents[this.size - this.logs[i]]
+}
+
+Field.prototype.generatePoly = function(sym_length) {
+    // takes # of error-correcting symbols
+    // returns default generator poly for given field
+
+    var poly = [ 1 ]
+
+    for (var i = 0; i < sym_length; i++) {
+        poly = this.multiplyPoly(poly, [1, this.exponents[i]])
+    }
+
+    return poly
 }
 
 Field.prototype.scalePoly = function (p, x) {
