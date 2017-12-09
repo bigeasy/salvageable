@@ -1,3 +1,4 @@
+'use strict';
 /*
  * https://research.swtch.com/field
  * https://en.wikiversity.org/wiki/Reed%E2%80%93Solomon_codes_for_coders#Finite_field_arithmetic
@@ -6,36 +7,84 @@
 function Field (size, primitive) {
     this.size = size
     this.primitive = primitive
-    this.exp_length = size * 2
-    this.exponents = [].apply(null, new Array(exp_length)).map(function () { return 1 })
-    this.logs = [].apply(null, new Array(size)).map(function () { return 0 })
+    let exp_length = size * 2
+    /*
+    this.exponents = Array.apply(null, new Array(exp_length)).map(function () { return 1 })
+    // need to use polyfill
+    this.logs = Array.apply(null, new Array(size)).map(function () { return 0 })
 
-    var x = 1, i = 1
+    var x = 1, i = 1, k = 0
 
      while (i < size) {
         x <<= 1
         if (x > size)  x ^= primitive
         this.exponents[i] = x
-        this.logs[x] = i
+        this.logs[x] = i //identity double as log
         i++
+
+        if (k == 16) {
+            k = 0
+            i++
+        } else {
+            k++
+        }
     }
 
     while (i < exp_length) {
         this.exponents[i] = this.exponents[i - size]
         i++
     }
+    */
+
+    fill.bind(this)();
+
+    function fill() {
+        this.exponents = this.polyfill(exp_length)
+        this.logs = this.polyfill(size)
+
+        var x = 1, i = 1, k = 0, index
+
+        while (i < size) {
+            x <<= 1
+            if (x > size) x ^= primitive
+            index = this.index(i)
+            this.exponents[index[0] << index[1]] = x
+            this.logs[index[0] << index[1]] = x
+            if (k == 16) {
+                k = 0
+                i++
+            } else {
+                k++
+            }
+        }
+    }
+}
+
+Field.prototype.index = function (index) {
+    // using index and this.size, figure out which integer
+    // has our value and at what position
+    
+    let result = [index / 4, 0], mod = this.size % index
+
+    while (mod--) result[0]++
+    
+    return result
 }
 
 Field.prototype.exp = function (i) {
     if (i < 0) return 0
 
-    return this.exponents[ i % this.size ]
+    //return this.exponents[ i % this.size ]
+ 
+    let index = this.index(i)
+    return this.exponents[ index[0] << index[1] % this.size ]
 }
 
 Field.prototype.log = function (i) {
     if (i == 0) return -1
 
-    return this.logs[i]
+    let index = this.index(i)
+    return this.exponents[ index[0] << index[1] ]
 }
 
 // instead of x/y, we can use x · 1/y.
@@ -114,3 +163,22 @@ Field.prototype.polyEval = function (p, x) {
 
     return y
 }
+
+Field.prototype.polyfill = function(x) {
+
+    if (x <= 4) {
+        return [ 0 ]
+    }
+
+    var arr = [], size = x / 4;
+
+    while (size--) { arr.push(0) }
+
+    size = x % 4;
+
+    while (size--) { arr.push(0) }
+
+    return arr
+}
+
+module.exports = Field
