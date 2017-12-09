@@ -1,4 +1,5 @@
 'use strict';
+
 /*
  * https://research.swtch.com/field
  * https://en.wikiversity.org/wiki/Reed%E2%80%93Solomon_codes_for_coders#Finite_field_arithmetic
@@ -152,7 +153,7 @@ Field.prototype.polyfill = function(x) {
 
     while (size--) { arr.push(0) }
 
-    size = x % 32;
+    size = x % 4;
 
     while (size--) { arr.push(0) }
 
