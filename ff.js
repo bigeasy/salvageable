@@ -8,33 +8,6 @@ function Field (size, primitive) {
     this.size = size
     this.primitive = primitive
     let exp_length = size * 2
-    /*
-    this.exponents = Array.apply(null, new Array(exp_length)).map(function () { return 1 })
-    // need to use polyfill
-    this.logs = Array.apply(null, new Array(size)).map(function () { return 0 })
-
-    var x = 1, i = 1, k = 0
-
-     while (i < size) {
-        x <<= 1
-        if (x > size)  x ^= primitive
-        this.exponents[i] = x
-        this.logs[x] = i //identity double as log
-        i++
-
-        if (k == 16) {
-            k = 0
-            i++
-        } else {
-            k++
-        }
-    }
-
-    while (i < exp_length) {
-        this.exponents[i] = this.exponents[i - size]
-        i++
-    }
-    */
 
     fill.bind(this)();
 
@@ -71,7 +44,7 @@ Field.prototype.index = function (index) {
     // using index and this.size, figure out which integer
     // has our value and at what position
     
-    let result = [index / 32, 0], mod = this.size % index
+    let result = [index / 4, 0], mod = this.size % index
 
     while (mod--) result[0]++
     
@@ -81,8 +54,6 @@ Field.prototype.index = function (index) {
 Field.prototype.exp = function (i) {
     if (i < 0) return 0
 
-    //return this.exponents[ i % this.size ]
- 
     let index = this.index(i)
     return this.exponents[ index[0] << index[1] % this.size ]
 }
