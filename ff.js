@@ -57,6 +57,13 @@ function Field (size, primitive) {
                 k++
             }
         }
+
+        while (i < exp_length) {
+            index = this.index(i)
+            this.exponents[index[0] << index[1]] =
+                this.exponents[this.index(i - size)]
+            i++
+        }
     }
 }
 
@@ -64,7 +71,7 @@ Field.prototype.index = function (index) {
     // using index and this.size, figure out which integer
     // has our value and at what position
     
-    let result = [index / 4, 0], mod = this.size % index
+    let result = [index / 32, 0], mod = this.size % index
 
     while (mod--) result[0]++
     
@@ -174,7 +181,7 @@ Field.prototype.polyfill = function(x) {
 
     while (size--) { arr.push(0) }
 
-    size = x % 4;
+    size = x % 32;
 
     while (size--) { arr.push(0) }
 
